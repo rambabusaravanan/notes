@@ -1,11 +1,11 @@
-| Features                       | S3   | Firebase |
-|--------------------------------|------|----------|
-| index and error document       | yes  | yes      |
-| meta: content-type, cache      | yes  | yes      |
-| cors: root level, object level | root | root     |
-| url redirection                | yes  | yes      |
-| url rewrite                    | -    | ?        |
-| multiple spa (rewrite)         | -    | ?        |
-| clean url                      | -    | yes      |
-| directory listing api          | yes  | ?        |
+| Features                       | S3| FB|
+|--------------------------------|---|---|
+| index and error document       | Y | Y |
+| meta: content-type, cache      | Y | Y |
+| cors: root level, object level | R | R |
+| url redirection                | Y | Y |
+| url rewrite                    | - | ? |
+| multiple spa (rewrite)         | - | ? |
+| clean url                      | - | Y |
+| directory listing api          | Y | ? |
 

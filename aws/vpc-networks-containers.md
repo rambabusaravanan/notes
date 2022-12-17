@@ -6,8 +6,8 @@ When networkMode = `bridge` or `host`
 - requires `containerName` and `containerPort`
 
 When networkMode = `awsvpc`
-- with `SRV DNS` record: requires (`containerName` and `containerPort`) or (`port`)
-- with `A DNS` record: requires nothing ??
+- with `SRV DNS` record - requires (`containerName` and `containerPort`) or (`port`)
+- with `A DNS` record - requires nothing ??
 
 ### Task Definition
 

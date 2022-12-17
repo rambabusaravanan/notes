@@ -1,11 +1,22 @@
 ### Encryption/Decryption
-- Encrypt: Use public key to encrypt
-- Decrypt: Use private key to decrypt
+
+| Operation | Key         |
+| --------- | ----------- |
+| Encrypt   | Public Key  |
+| Decrypt   | Private Key |
 
 ### Sign/Verify Signature
 Creating and verifying signatures uses the public/private keypair in an operation different from encryption and decryption.
 
-- Sign: A signature is created using the **private key** of the signer.
-- Verify: The signature is verified using the corresponding **public key**
+| Operation | Key         |
+| --------- | ----------- |
+| Sign      | Private Key |
+| Verify    | Public Key  |
 
 _Reference: https://www.gnupg.org/gph/en/manual/x135.html_
+
+### MAC
+
+- HMAC - Hash-based Message Authentication Codes. Eg, SHA
+- CMAC - Cipher-based Message Authentication Codes. Eg, AES
+

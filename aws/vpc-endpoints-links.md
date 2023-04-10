@@ -1,8 +1,8 @@
 # VPC Endpoints
 
-- **Interface Endpoint** - traffic for `vpce` resolved using DNS to an ENI, to send traffic to NLB
-- **GatewayLoadBalancer Endpoint** - use Route Table, to send traffic to GatewayLoadBalancer
-- **Gateway Endpoint** - use Route Table, to send traffic to Amazon S3 or DynamoDB using private IP addresses
+- **Interface Endpoint** - traffic for `vpce` resolved using DNS to an ENI, to send traffic to NLB (AWS PrivateLink)
+- **GatewayLoadBalancer Endpoint** - use Route Table, to send traffic to GatewayLoadBalancer (AWS PrivateLink)
+- **Gateway Endpoint** - use Route Table, to send traffic to Amazon S3 or DynamoDB using private IP addresses (No AWS PrivateLink)
 
 Reference: https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html#concepts-vpc-endpoints
 

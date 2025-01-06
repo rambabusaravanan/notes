@@ -37,9 +37,9 @@ Firefox (downloaded)
 
 # CheatSheet
 
-https://knowledge.digicert.com/general-information/openssl-quick-reference-guide
-https://www.ibm.com/docs/en/rpa/23.0?topic=keys-generating-self-signed-certificates
-https://www.ibm.com/docs/en/license-metric-tool?topic=certificate-step-2-signing-certificates
+- https://knowledge.digicert.com/general-information/openssl-quick-reference-guide
+- https://www.ibm.com/docs/en/rpa/23.0?topic=keys-generating-self-signed-certificates
+- https://www.ibm.com/docs/en/license-metric-tool?topic=certificate-step-2-signing-certificates
 
 ## View Contents / Convert Format
 ```sh

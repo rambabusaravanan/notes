@@ -25,7 +25,7 @@ Common Container Formats like PKCS#12 or PKCS#7
 
 Import Certificate
 - PrivateKey => private.key (domain)
-- CertificateBody => certificate.crt (domain)
+- CertificateBody => certificate.pem (domain)
 - CertificateChain => issuer-ca.crt / issuer-ca-chain.crt
 - CA Bundle => issuer-ca.crt + trusted-root.crt (Is this same as issuer-ca-chain.crt)
 
@@ -38,12 +38,14 @@ Firefox (downloaded)
 # CheatSheet
 
 https://knowledge.digicert.com/general-information/openssl-quick-reference-guide
+https://www.ibm.com/docs/en/rpa/23.0?topic=keys-generating-self-signed-certificates
+https://www.ibm.com/docs/en/license-metric-tool?topic=certificate-step-2-signing-certificates
 
 ## View Contents / Convert Format
 ```sh
 # View as Text
 openssl req  -text             -in request.csr                          -noout # view a csr pem
-openssl x509 -text             -in certificate.pem                      -noout # view a cert pem
+openssl x509 -text             -in certificate.pem -out certificate.txt -noout # view a cert pem & write to file
 openssl x509 -text -inform der -in certificate.der -out certificate.txt -noout # view a cert der & write to file
 
 # Convert Format
@@ -51,7 +53,7 @@ openssl x509 -inform der  -in certificate.der  -out certificate.pem # convert de
 openssl x509 -outform der -in certificate.pem  -out certificate.der # convert pem to der
 ```
 
-## Generate a Key Pair
+## 1. Generate a Key Pair
 https://developers.yubico.com/PIV/Guides/Generating_keys_using_OpenSSL.html
 ```sh
 # RSA
@@ -61,27 +63,36 @@ openssl rsa -pubout -in private.key -out public.key                 # Extract Pu
 openssl ecparam -genkey -name prime256v1 -out private.key -noout    # Generate Private Key
 openssl ec  -pubout -in private.key -out public.key                 # Extract Public Key from Private Key
 ```
+Note: Using '-des3' enables password for private key
 
-## Generate a CSR [+ Private Key]
+## 2. Generate a CSR [+ Private Key]
+Using Private Key
+
 ```sh
-# Generate CSR using Private Key
-openssl req -new -key private.key                            -out domain.csr
-
-# Generate Both CSR & Private Key
-openssl req -new -newkey rsa:2048 -nodes -keyout private.key -out domain.csr
+openssl req -new -key private.key                            -out request.csr # Generate CSR using Private Key
+openssl req -new -newkey rsa:2048 -nodes -keyout private.key -out request.csr # Generate Both CSR & Private Key
 ```
+Note: Using '-nodes' will not require password
+
+## 3. Generate (Sign) a Certificate
+Using CSR and Self Private Key;
+Using CSR and CA Private Key and CA Certificate;
+
+```sh
+openssl x509 -req -sha256 -days 365 -signkey private.key                         -in request.csr -out certificate.pem                 # Self signed
+openssl x509 -req -sha256 -days 365 -CA ca_certificate.pem -CAkey ca_private.key -in request.csr -out certificate.pem -set_serial 01  # CA signed
+```
+Note: Eventhough signing same csr, 'Serial Number', 'Validity', and hence the 'Signature' will vary for each certificate
 
 ## Generate a Self Signed Certificate + Private Key
-https://www.ibm.com/docs/en/rpa/23.0?topic=keys-generating-self-signed-certificates
-You must add a password to protect the key file.
 ```sh
-openssl req -x509 -sha256 -newkey rsa:2048 -keyout private.key -out certificate.crt -days 365
+openssl req -x509 -sha256 -days 365 -newkey rsa:2048     -keyout private.key -out certificate.pem
 ```
 
 ## Extract Public Key (from Cert/PubKey)
 ```sh
 openssl req  -pubkey -in request.csr -out public.key -noout       # Extract Public Key from CSR
-openssl x509 -pubkey -in certificate.crt -out public.key -noout   # Extract Public Key from Certificate
+openssl x509 -pubkey -in certificate.pem -out public.key -noout   # Extract Public Key from Certificate
 openssl pkey -pubout -in private.key -out public.key              # Extract Public Key from Private Key
 
 openssl rsa  -pubout -in private.key -out public.key              # Extract Public Key from RSA Private Key
@@ -96,6 +107,6 @@ NOTE:
 https://www.ibm.com/support/pages/how-verify-if-private-key-matches-certificate
 
 ```sh
-openssl x509 -modulus -in certificate.crt -noout | openssl md5
+openssl x509 -modulus -in certificate.pem -noout | openssl md5
 openssl rsa  -modulus -in private.key     -noout | openssl md5
 ```

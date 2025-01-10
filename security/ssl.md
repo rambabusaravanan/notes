@@ -105,8 +105,10 @@ NOTE:
 
 ## Verify if a Private Key matches the Certificate, by comparing the 'modulus'.
 https://www.ibm.com/support/pages/how-verify-if-private-key-matches-certificate
+https://my.f5.com/manage/s/article/K52310415
 
 ```sh
+openssl req  -modulus -in request.csr     -noout | openssl md5
 openssl x509 -modulus -in certificate.pem -noout | openssl md5
 openssl rsa  -modulus -in private.key     -noout | openssl md5
 ```
